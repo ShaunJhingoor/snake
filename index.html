@@ -24,11 +24,45 @@
         max-width: 800px; /* Prevents canvas from getting too large */
         max-height: 800px;
       }
+      /* #controls {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      } */
+
+      #controls button {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        margin: 5px;
+        background-color: #444;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #controls div {
+        display: flex;
+        gap: 10px;
+      }
     </style>
   </head>
   <body>
     <h1 style="color: aqua">Snake Game</h1>
     <canvas id="gameCanvas" width="800" height="800"></canvas>
     <script src="game.js"></script>
+    <div id="controls">
+      <button id="up">▲</button>
+      <div>
+        <button id="left">◀</button>
+        <button id="down">▼</button>
+        <button id="right">▶</button>
+      </div>
+    </div>
   </body>
 </html>
