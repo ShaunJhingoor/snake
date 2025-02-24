@@ -7,6 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const rows = canvasSize / box;
   const cols = canvasSize / box;
 
+  document.addEventListener(
+    "touchmove",
+    function (event) {
+      event.preventDefault();
+    },
+    { passive: false }
+  );
+
   document.getElementById("up").addEventListener("click", () => {
     if (direction !== "DOWN") direction = "UP";
   });
