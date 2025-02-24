@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.fillStyle = "black";
     ctx.font = "5dvh Arial";
 
-    const text = "Press Play to Start";
+    const text = "Press to Start";
     const textWidth = ctx.measureText(text).width;
 
     ctx.fillText(text, (canvas.width - textWidth) / 2, canvas.height / 2);
