@@ -401,9 +401,36 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.fillText(`Score: ${score}`, 10, 20);
     ctx.fillText(`Level: ${level}`, 10, 40);
   }
+  function togglePause() {
+    if (!running) {
+      // If game is not running, start it
+      resetGame();
+      startGame();
+      return;
+    }
+
+    if (gameLoop) {
+      // If game is running, pause it
+      clearInterval(gameLoop);
+      gameLoop = null;
+      ctx.fillStyle = "white";
+      ctx.font = "5dvh Arial";
+      const text = "Paused - Press Space to Resume";
+      const textWidth = ctx.measureText(text).width;
+      ctx.fillText(text, (canvas.width - textWidth) / 2, canvas.height / 2);
+    } else {
+      // If game is paused, resume it
+      gameLoop = setInterval(draw, speed);
+    }
+  }
 
   // Handle Key Events
   document.addEventListener("keydown", (event) => {
+    if (event.key === " ") {
+      // Space bar
+      event.preventDefault(); // Prevent page from scrolling down
+      togglePause();
+    }
     if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
     if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
     if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
