@@ -401,6 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.fillText(`Score: ${score}`, 10, 20);
     ctx.fillText(`Level: ${level}`, 10, 40);
   }
+
   function togglePause() {
     if (!running) {
       // If game is not running, start it
