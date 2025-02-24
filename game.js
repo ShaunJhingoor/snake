@@ -1,16 +1,14 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Grid size
-const box = 20;
-const canvasSize = 800;
+const canvasSize = canvas?.height;
+const box = Math.floor(Math.min(canvasSize, canvas.height) / 30);
 const rows = canvasSize / box;
 const cols = canvasSize / box;
 
 let snake, direction, food, score, gameLoop, badFood, level, speed, running;
-let lastScoreForLevelUp = 0; // Prevents infinite level up
+let lastScoreForLevelUp = 0;
 
-// Initialize variables but do not start the game yet
 function resetGame() {
   snake = [
     {
@@ -21,9 +19,9 @@ function resetGame() {
   direction = "RIGHT";
   score = 0;
   level = 1;
-  speed = 150; // Base speed (milliseconds per frame)
+  speed = 150;
   running = false;
-  lastScoreForLevelUp = 0; // Reset level tracking
+  lastScoreForLevelUp = 0;
 
   food = getRandomPositions(1);
   badFood = getRandomPositions(1);
@@ -38,8 +36,12 @@ function resetGame() {
 function clearBoard() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "black";
-  ctx.font = "20px Arial";
-  ctx.fillText("Press Play to Start", canvas.width / 4, canvas.height / 2);
+  ctx.font = "5dvh Arial";
+
+  const text = "Press Play to Start";
+  const textWidth = ctx.measureText(text).width;
+
+  ctx.fillText(text, (canvas.width - textWidth) / 2, canvas.height / 2);
 }
 
 // Generate a random position on the grid
@@ -67,18 +69,238 @@ function draw() {
 
   // Draw food
   ctx.fillStyle = "green";
-  food.forEach((pos) => ctx.fillRect(pos.x, pos.y, box, box));
+  food.forEach((pos) => {
+    const radius = box / 2;
+
+    ctx.beginPath();
+    ctx.arc(pos.x + radius, pos.y + radius, radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "brown";
+    ctx.fillRect(
+      pos.x + radius - box / 10,
+      pos.y + radius - box / 1.5,
+      box / 5,
+      box / 3
+    );
+
+    ctx.fillStyle = "lightgreen";
+    ctx.beginPath();
+    ctx.arc(pos.x + radius / 2, pos.y + radius / 2, radius / 3, 0, Math.PI * 2);
+    ctx.fill();
+  });
 
   // Draw bad food
-  ctx.fillStyle = "red";
-  badFood.forEach((pos) => ctx.fillRect(pos.x, pos.y, box, box));
+  badFood.forEach((pos) => {
+    const bottleWidth = box * 0.6; // Width of the bottle
+    const bottleHeight = box * 1.5; // Height of the bottle
+    const centerX = pos.x + box / 2;
+    const centerY = pos.y + box / 2;
 
-  // Draw snake
-  ctx.fillStyle = "blue";
-  snake.forEach((part) => {
-    ctx.fillRect(part.x, part.y, box, box);
+    // **1️⃣ Draw Flask Body (Transparent Glass)**
+    ctx.fillStyle = "rgba(100, 100, 255, 0.5)"; // Light blue transparent glass
+    ctx.beginPath();
+    ctx.moveTo(centerX - bottleWidth / 2, centerY + bottleHeight / 3); // Bottom Left
+    ctx.quadraticCurveTo(
+      centerX,
+      centerY + bottleHeight / 2,
+      centerX + bottleWidth / 2,
+      centerY + bottleHeight / 3
+    ); // Curve bottom
+    ctx.lineTo(centerX + bottleWidth / 2.8, centerY - bottleHeight / 3); // Move up slightly inward
+    ctx.lineTo(centerX - bottleWidth / 2.8, centerY - bottleHeight / 3);
+    ctx.lineTo(centerX - bottleWidth / 2, centerY + bottleHeight / 3);
+    ctx.fill();
+
+    // **2️⃣ Draw Poison Liquid Inside**
+    ctx.fillStyle = "limegreen";
+    ctx.fillRect(
+      centerX - bottleWidth / 2.2,
+      centerY,
+      bottleWidth * 0.9,
+      bottleHeight / 3.5
+    );
+
+    // **3️⃣ Draw Flask Neck (Top Part)**
+    ctx.fillStyle = "gray";
+    ctx.fillRect(
+      centerX - bottleWidth / 4,
+      centerY - bottleHeight / 2.5,
+      bottleWidth / 2,
+      bottleHeight / 6
+    );
+
+    // **4️⃣ Draw Cork (Cap on Top)**
+    ctx.fillStyle = "brown";
+    ctx.fillRect(
+      centerX - bottleWidth / 3,
+      centerY - bottleHeight / 2.3,
+      bottleWidth * 0.6,
+      bottleHeight / 12
+    );
+
+    // **5️⃣ Skull Face (White)**
+    ctx.fillStyle = "black";
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, bottleWidth / 3.5, 0, Math.PI * 2); // Skull head
+    ctx.fill();
+
+    // **Eyes**
+    ctx.fillStyle = "red";
+    ctx.beginPath();
+    ctx.arc(
+      centerX - bottleWidth / 6,
+      centerY - bottleWidth / 8,
+      bottleWidth / 10,
+      0,
+      Math.PI * 2
+    );
+    ctx.arc(
+      centerX + bottleWidth / 6,
+      centerY - bottleWidth / 8,
+      bottleWidth / 10,
+      0,
+      Math.PI * 2
+    );
+    ctx.fill();
+
+    // **Mouth (Small Line)**
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(centerX - bottleWidth / 6, centerY + bottleWidth / 8);
+    ctx.lineTo(centerX + bottleWidth / 6, centerY + bottleWidth / 8);
+    ctx.stroke();
+
+    // **6️⃣ Crossbones (Two Diagonal Lines)**
     ctx.strokeStyle = "black";
-    ctx.strokeRect(part.x, part.y, box, box);
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(centerX - bottleWidth / 2, centerY + bottleWidth / 2);
+    ctx.lineTo(centerX + bottleWidth / 2, centerY - bottleWidth / 2);
+    ctx.moveTo(centerX - bottleWidth / 2, centerY - bottleWidth / 2);
+    ctx.lineTo(centerX + bottleWidth / 2, centerY + bottleWidth / 2);
+    ctx.stroke();
+
+    // **7️⃣ Poison Bubbles (Floating Above the Flask)**
+    ctx.fillStyle = "lightgreen";
+    ctx.beginPath();
+    ctx.arc(
+      centerX - 5,
+      centerY - bottleHeight / 1.6,
+      bottleWidth / 8,
+      0,
+      Math.PI * 2
+    );
+    ctx.arc(
+      centerX + 5,
+      centerY - bottleHeight / 1.8,
+      bottleWidth / 10,
+      0,
+      Math.PI * 2
+    );
+    ctx.fill();
+
+    // **8️⃣ Glowing Poison Effect**
+    ctx.shadowColor = "rgba(0, 255, 0, 0.8)";
+    ctx.shadowBlur = 10;
+    ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
+    ctx.beginPath();
+    ctx.arc(
+      centerX,
+      centerY + bottleHeight / 4,
+      bottleWidth / 2,
+      0,
+      Math.PI * 2
+    );
+    ctx.fill();
+    ctx.shadowBlur = 0; // Reset glow effect
+  });
+
+  // Draw Snake Body & Head
+  ctx.fillStyle = "green"; // Snake color
+
+  snake.forEach((part, index) => {
+    const isHead = index === 0; // First segment is the head
+    const radius = isHead ? box / 2 : box / 2.5; // Slightly larger head
+
+    // **1️⃣ Create Smooth Snake Body**
+    ctx.fillStyle = index % 2 === 0 ? "green" : "darkgreen"; // Alternate colors for a snake scale effect
+    ctx.beginPath();
+    ctx.arc(part.x + box / 2, part.y + box / 2, radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "darkgreen"; // Slightly darker outline
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // **2️⃣ Draw Snake Head with Eyes & Tapered Shape**
+    if (isHead) {
+      ctx.fillStyle = "black";
+
+      // Adjust eye positioning based on direction
+      let leftEyeX, leftEyeY, rightEyeX, rightEyeY;
+
+      if (direction === "RIGHT") {
+        leftEyeX = part.x + box * 0.65;
+        rightEyeX = part.x + box * 0.8;
+        leftEyeY = rightEyeY = part.y + box * 0.3;
+      } else if (direction === "LEFT") {
+        leftEyeX = part.x + box * 0.2;
+        rightEyeX = part.x + box * 0.35;
+        leftEyeY = rightEyeY = part.y + box * 0.3;
+      } else if (direction === "UP") {
+        leftEyeX = rightEyeX = part.x + box * 0.3;
+        leftEyeY = part.y + box * 0.2;
+        rightEyeY = part.y + box * 0.35;
+      } else {
+        leftEyeX = rightEyeX = part.x + box * 0.3;
+        leftEyeY = part.y + box * 0.65;
+        rightEyeY = part.y + box * 0.8;
+      }
+
+      // Draw Eyes
+      ctx.beginPath();
+      ctx.arc(leftEyeX, leftEyeY, box / 10, 0, Math.PI * 2); // Left eye
+      ctx.arc(rightEyeX, rightEyeY, box / 10, 0, Math.PI * 2); // Right eye
+      ctx.fill();
+
+      // **3️⃣ Draw Snake Tongue in the Correct Direction**
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+
+      if (direction === "RIGHT") {
+        ctx.moveTo(part.x + box, part.y + box / 2);
+        ctx.lineTo(part.x + box + 8, part.y + box / 2);
+        ctx.moveTo(part.x + box + 8, part.y + box / 2);
+        ctx.lineTo(part.x + box + 12, part.y + box / 2 - 3);
+        ctx.moveTo(part.x + box + 8, part.y + box / 2);
+        ctx.lineTo(part.x + box + 12, part.y + box / 2 + 3);
+      } else if (direction === "LEFT") {
+        ctx.moveTo(part.x, part.y + box / 2);
+        ctx.lineTo(part.x - 8, part.y + box / 2);
+        ctx.moveTo(part.x - 8, part.y + box / 2);
+        ctx.lineTo(part.x - 12, part.y + box / 2 - 3);
+        ctx.moveTo(part.x - 8, part.y + box / 2);
+        ctx.lineTo(part.x - 12, part.y + box / 2 + 3);
+      } else if (direction === "UP") {
+        ctx.moveTo(part.x + box / 2, part.y);
+        ctx.lineTo(part.x + box / 2, part.y - 8);
+        ctx.moveTo(part.x + box / 2, part.y - 8);
+        ctx.lineTo(part.x + box / 2 - 3, part.y - 12);
+        ctx.moveTo(part.x + box / 2, part.y - 8);
+        ctx.lineTo(part.x + box / 2 + 3, part.y - 12);
+      } else {
+        ctx.moveTo(part.x + box / 2, part.y + box);
+        ctx.lineTo(part.x + box / 2, part.y + box + 8);
+        ctx.moveTo(part.x + box / 2, part.y + box + 8);
+        ctx.lineTo(part.x + box / 2 - 3, part.y + box + 12);
+        ctx.moveTo(part.x + box / 2, part.y + box + 8);
+        ctx.lineTo(part.x + box / 2 + 3, part.y + box + 12);
+      }
+
+      ctx.stroke();
+    }
   });
 
   let head = { ...snake[0] };
@@ -90,7 +312,6 @@ function draw() {
   // Add new head before checking collision (so the final move is displayed)
   snake.unshift(head);
 
-  // Check for collision with walls or itself
   if (
     head.x < 0 ||
     head.y < 0 ||
@@ -147,9 +368,8 @@ function draw() {
     levelUp();
   }
 
-  // Display score and level
-  ctx.fillStyle = "black";
-  ctx.font = "20px Arial";
+  ctx.fillStyle = "agua";
+  ctx.font = "2dvh Arial";
   ctx.fillText(`Score: ${score}`, 10, 20);
   ctx.fillText(`Level: ${level}`, 10, 40);
 }
@@ -165,9 +385,9 @@ document.addEventListener("keydown", (event) => {
 // Level up function
 function levelUp() {
   level++;
-  speed = Math.max(50, speed - 10); // Increase speed
-  food.push(...getRandomPositions(1)); // Add more food
-  badFood.push(...getRandomPositions(1)); // Add more bad food
+  speed = Math.max(50, speed - 10);
+  food.push(...getRandomPositions(1));
+  badFood.push(...getRandomPositions(1));
 
   clearInterval(gameLoop);
   gameLoop = setInterval(draw, speed);
@@ -186,13 +406,16 @@ function endGame() {
       resetGame();
       startGame();
     } else {
-      clearBoard(); // Clears the board if user cancels
+      clearBoard();
+      resetGame();
     }
-  }, 200); // Small delay ensures last movement is fully rendered
+  }, 200);
 }
 
-// Attach Play Button
-document.getElementById("playButton").addEventListener("click", startGame);
+canvas.addEventListener("click", () => {
+  if (!running) {
+    startGame();
+  }
+});
 
-// Reset game state on load
 resetGame();
