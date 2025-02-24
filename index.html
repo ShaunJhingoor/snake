@@ -18,11 +18,16 @@
 
       canvas {
         background-color: gray;
-        border: 2px solid black;
+        border: 2px solid wheat;
         width: 80dvw; /* Make canvas responsive */
         height: 80dvh;
         max-width: 800px; /* Prevents canvas from getting too large */
         max-height: 800px;
+      }
+      #controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       html,
       body {
@@ -32,20 +37,20 @@
       }
 
       #controls button {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        margin: 5px;
+        width: 10dvh;
+        height: 4dvh;
+        font-size: 2dvh;
+        margin: 0.5dvh;
         background-color: #444;
         color: white;
-        border: none;
-        border-radius: 5px;
+        border: 2px solid wheat;
+        border-radius: 1dvh;
         cursor: pointer;
       }
 
       #controls div {
         display: flex;
-        gap: 10px;
+        gap: 1dvh;
       }
     </style>
   </head>
