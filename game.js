@@ -27,20 +27,20 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("right").addEventListener("click", () => {
     if (direction !== "LEFT") direction = "RIGHT";
   });
-  // ✅ For Desktops & Mobiles (Click)
+
   canvas.addEventListener("click", (event) => {
     event.preventDefault();
     togglePause();
   });
 
-  // ✅ For Mobile Touchscreens (Instant Response)
   canvas.addEventListener("touchstart", (event) => {
-    event.preventDefault(); // Prevents accidental zooming or scrolling
+    event.preventDefault();
     togglePause();
   });
 
   let snake, direction, food, score, gameLoop, badFood, level, speed, running;
   let lastScoreForLevelUp = 0;
+  let isPaused = false;
 
   const bgMusic = new Audio("assets/bgMusic.wav");
   const goodFruitSFX = new Audio("assets/goodFood.mp3");
@@ -445,18 +445,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (gameLoop) {
-      // If game is running, pause it
+    if (isPaused) {
+      gameLoop = setInterval(draw, speed);
+      isPaused = false;
+    } else {
       clearInterval(gameLoop);
-      gameLoop = null;
-      ctx.fillStyle = "wheat"; // Match the h2 color
-      ctx.font = "2dvh 'Press Start 2P', cursive"; // Use the same font
-      const text = "Paused - Press Space or Click to Resume";
+      isPaused = true;
+      ctx.fillStyle = "wheat";
+      ctx.font = "2dvh 'Press Start 2P', cursive";
+      const text = "Paused - Press Space or Tap to Resume";
       const textWidth = ctx.measureText(text).width;
       ctx.fillText(text, (canvas.width - textWidth) / 2, canvas.height / 2);
-    } else {
-      // If game is paused, resume it
-      gameLoop = setInterval(draw, speed);
     }
   }
 
@@ -533,7 +532,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Open Settings Modal & Pause Game
   settingsButton.addEventListener("click", () => {
-    togglePause();
+    if (!isPaused && running) {
+      togglePause();
+    }
 
     settingsModal.style.display = "flex";
   });
