@@ -68,6 +68,141 @@
         touch-action: none;
       }
 
+      /* Header container to align title and mute button */
+      /* Header container to align title and buttons */
+      #header {
+        width: 90dvw;
+        max-width: 800px;
+        display: flex;
+        justify-content: space-between; /* Title on left, buttons on right */
+        align-items: center;
+        padding: 1dvh;
+      }
+
+      /* Button container to keep buttons together */
+      #header-buttons {
+        display: flex;
+        gap: 1dvh; /* Space between buttons */
+      }
+
+      /* Mute & Settings Buttons Styling */
+      #muteButton {
+        font-family: "Press Start 2P", cursive;
+        font-size: 1.5dvh;
+        padding: 8px 16px;
+        background-color: black;
+        color: wheat;
+        border: 2px solid wheat;
+        cursor: pointer;
+        text-transform: uppercase;
+        box-shadow: 0 0 5px rgba(255, 0, 255, 0.7),
+          0 0 10px rgba(255, 0, 255, 0.5), inset 0 0 5px rgba(255, 0, 255, 0.6);
+        transition: transform 0.1s ease-in-out, box-shadow 0.2s ease-in-out;
+      }
+
+      #settingsButton {
+        font-family: "Press Start 2P", cursive;
+        font-size: 3dvh;
+        padding: 8px 16px;
+        background-color: black;
+        color: wheat;
+        border: 2px solid wheat;
+        cursor: pointer;
+        text-transform: uppercase;
+        box-shadow: 0 0 5px rgba(255, 0, 255, 0.7),
+          0 0 10px rgba(255, 0, 255, 0.5), inset 0 0 5px rgba(255, 0, 255, 0.6);
+        transition: transform 0.1s ease-in-out, box-shadow 0.2s ease-in-out;
+      }
+
+      /* Settings Modal (Same style as Game Over Modal) */
+      #settingsModal {
+        display: none;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Modal Content */
+      #settingsModal .modal-content {
+        background-color: black;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        width: 300px;
+        color: wheat;
+        border: 2px solid wheat;
+        box-shadow: 0 0 4px rgba(255, 0, 255, 0.4),
+          0 0 8px rgba(255, 0, 255, 0.3), 0 0 16px rgba(255, 0, 255, 0.2),
+          inset 0 0 4px rgba(255, 0, 255, 0.3);
+      }
+
+      /* Control Position Buttons */
+      #controlOptions {
+        display: flex;
+        justify-content: center;
+        gap: 1dvh;
+        margin: 10px 0;
+      }
+
+      .controlOption {
+        font-family: "Press Start 2P", cursive;
+        font-size: 1.2dvh;
+        padding: 8px 16px;
+        background-color: black;
+        color: wheat;
+        border: 2px solid wheat;
+        cursor: pointer;
+        text-transform: uppercase;
+        box-shadow: 0 0 5px rgba(255, 0, 255, 0.7),
+          0 0 10px rgba(255, 0, 255, 0.5), inset 0 0 5px rgba(255, 0, 255, 0.6);
+      }
+
+      .controlOption:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.9),
+          0 0 20px rgba(255, 0, 255, 0.7), inset 0 0 8px rgba(255, 0, 255, 0.7);
+      }
+
+      #closeSettings {
+        margin-top: 10px;
+        padding: 10px 15px;
+        font-size: 1.5dvh;
+        border: none;
+        cursor: pointer;
+        background-color: red;
+        color: wheat;
+        border: 2px solid wheat;
+      }
+
+      #muteButton:hover,
+      #settingsButton:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.9),
+          0 0 20px rgba(255, 0, 255, 0.7), inset 0 0 8px rgba(255, 0, 255, 0.7);
+      }
+
+      /* Button Press Effect */
+      #muteButton:active,
+      #settingsButton:active {
+        transform: scale(0.95);
+        box-shadow: 0 0 5px rgba(255, 0, 255, 0.5),
+          0 0 10px rgba(255, 0, 255, 0.4), inset 0 0 10px rgba(255, 0, 255, 0.8);
+      }
+
+      #controlsContainer {
+        display: flex;
+        justify-content: center; /* Default center */
+        width: 100%;
+
+        bottom: 1dvh;
+      }
+
       #controls {
         display: flex;
         flex-direction: column;
@@ -258,17 +393,27 @@
   />
 
   <body>
-    <h1 style="color: wheat">Snake Game</h1>
-    <canvas id="gameCanvas" width="800" height="800"></canvas>
-    <script src="game.js"></script>
-    <div id="controls">
-      <button id="up">▲</button>
-      <div>
-        <button id="left">◀</button>
-        <button id="down">▼</button>
-        <button id="right">▶</button>
+    <div id="header">
+      <h1>Snake Game</h1>
+      <div id="header-buttons">
+        <button id="muteButton">Mute</button>
+        <button id="settingsButton">⚙</button>
       </div>
     </div>
+
+    <canvas id="gameCanvas" width="800" height="800"></canvas>
+    <script src="game.js"></script>
+    <div id="controlsContainer">
+      <div id="controls">
+        <button id="up">▲</button>
+        <div>
+          <button id="left">◀</button>
+          <button id="down">▼</button>
+          <button id="right">▶</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Game Over Modal -->
     <div id="gameOverModal" class="modal">
       <div class="modal-content">
@@ -276,6 +421,19 @@
         <h2 id="finalScore">Final Score: 0</h2>
         <button id="playAgain">Play Again</button>
         <button id="exitGame">End Game</button>
+      </div>
+    </div>
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <h1>Settings</h1>
+        <h2>Control Position</h2>
+        <button class="controlOption" data-position="center">Center</button>
+        <div id="controlOptions">
+          <button class="controlOption" data-position="left">Left</button>
+          <button class="controlOption" data-position="right">Right</button>
+        </div>
+        <button id="closeSettings">Close</button>
       </div>
     </div>
   </body>

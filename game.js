@@ -35,7 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const goodFruitSFX = new Audio("assets/goodFood.mp3");
   const badFoodSFX = new Audio("assets/badFood.wav");
   bgMusic.loop = true;
-  bgMusic.volume = 0.5; // Adjust volume if needed
+  bgMusic.volume = 0.5;
+  const muteButton = document.getElementById("muteButton");
+  let isMuted = false;
+
+  muteButton.addEventListener("click", () => {
+    isMuted = !isMuted;
+    bgMusic.muted = isMuted;
+    goodFruitSFX.muted = isMuted;
+    badFoodSFX.muted = isMuted;
+    muteButton.textContent = isMuted ? "Unmute" : "Mute";
+  });
 
   function resetGame() {
     snake = [
@@ -497,6 +507,52 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!running) {
       startGame();
     }
+  });
+
+  const settingsButton = document.getElementById("settingsButton");
+  const settingsModal = document.getElementById("settingsModal");
+  const closeSettings = document.getElementById("closeSettings");
+  const controlButtons = document.querySelectorAll(".controlOption");
+  const controls = document.getElementById("controls");
+
+  // Ensure the parent container is flexbox
+  controls.style.display = "flex";
+  controls.style.flexDirection = "column";
+  controls.style.alignItems = "center"; // Default center
+
+  // Open Settings Modal & Pause Game
+  settingsButton.addEventListener("click", () => {
+    togglePause();
+
+    settingsModal.style.display = "flex";
+  });
+
+  // Close Settings Modal
+  closeSettings.addEventListener("click", () => {
+    settingsModal.style.display = "none";
+  });
+
+  // Change Control Position
+  controlButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const position = event.target.dataset.position;
+
+      // Get the parent container of controls (so we modify positioning properly)
+      const controlsContainer = controls.parentElement;
+
+      if (position === "left") {
+        controlsContainer.style.justifyContent = "flex-start";
+        controlsContainer.style.alignItems = "flex-start";
+      } else if (position === "right") {
+        controlsContainer.style.justifyContent = "flex-end";
+        controlsContainer.style.alignItems = "flex-end";
+      } else {
+        controlsContainer.style.justifyContent = "center";
+        controlsContainer.style.alignItems = "center";
+      }
+
+      settingsModal.style.display = "none"; // Close settings after selection
+    });
   });
 
   resetGame();
