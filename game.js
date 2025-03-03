@@ -454,11 +454,15 @@ document.addEventListener("DOMContentLoaded", () => {
     running = false;
 
     setTimeout(() => {
-      // Update the final score inside the modal
-      document.getElementById("finalScore").innerText = `Final Score: ${score}`;
-
-      // Show the modal
-      document.getElementById("gameOverModal").style.display = "flex";
+      if (score < 0) {
+        document.getElementById("finalScore").innerText = `Final Score: 0`;
+        document.getElementById("gameOverModal").style.display = "flex";
+      } else {
+        document.getElementById(
+          "finalScore"
+        ).innerText = `Final Score: ${score}`;
+        document.getElementById("gameOverModal").style.display = "flex";
+      }
     }, 200);
   }
 
