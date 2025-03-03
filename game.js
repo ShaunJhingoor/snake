@@ -31,6 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let snake, direction, food, score, gameLoop, badFood, level, speed, running;
   let lastScoreForLevelUp = 0;
 
+  const bgMusic = new Audio("assets/bgMusic.wav");
+  const goodFruitSFX = new Audio("assets/goodFood.mp3");
+  const badFoodSFX = new Audio("assets/badFood.wav");
+  bgMusic.loop = true;
+  bgMusic.volume = 0.5; // Adjust volume if needed
+
   function resetGame() {
     snake = [
       {
@@ -83,6 +89,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (running) return; // Prevent multiple game loops
     running = true;
     gameLoop = setInterval(draw, speed);
+    bgMusic.play().catch((err) => console.error("Music playback failed:", err));
+  }
+
+  function playSound(effect) {
+    effect.currentTime = 0; // Reset audio for overlapping plays
+    effect.play();
   }
 
   // Draw Snake & Food
@@ -358,6 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
     food = food.filter((pos) => {
       if (pos.x === head.x && pos.y === head.y) {
         ateGoodFood = true;
+        playSound(goodFruitSFX);
         return false;
       }
       return true;
@@ -375,6 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
     badFood = badFood.filter((pos) => {
       if (pos.x === head.x && pos.y === head.y) {
         ateBadFood = true;
+        playSound(badFoodSFX);
         return false;
       }
       return true;
@@ -396,7 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
       levelUp();
     }
 
-    ctx.fillStyle = "agua";
+    ctx.fillStyle = score === 0 ? "wheat" : "";
     ctx.font = "1.5dvh 'Press Start 2P', cursive"; // Use the same font
     ctx.fillText(`Score: ${score}`, 20, 40);
     ctx.fillText(`Level: ${level}`, 20, 60);
