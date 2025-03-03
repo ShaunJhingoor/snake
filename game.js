@@ -27,6 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("right").addEventListener("click", () => {
     if (direction !== "LEFT") direction = "RIGHT";
   });
+  // ✅ For Desktops & Mobiles (Click)
+  canvas.addEventListener("click", (event) => {
+    event.preventDefault();
+    togglePause();
+  });
+
+  // ✅ For Mobile Touchscreens (Instant Response)
+  canvas.addEventListener("touchstart", (event) => {
+    event.preventDefault(); // Prevents accidental zooming or scrolling
+    togglePause();
+  });
 
   let snake, direction, food, score, gameLoop, badFood, level, speed, running;
   let lastScoreForLevelUp = 0;
@@ -440,7 +451,7 @@ document.addEventListener("DOMContentLoaded", () => {
       gameLoop = null;
       ctx.fillStyle = "wheat"; // Match the h2 color
       ctx.font = "2dvh 'Press Start 2P', cursive"; // Use the same font
-      const text = "Paused - Press Space to Resume";
+      const text = "Paused - Press Space or Click to Resume";
       const textWidth = ctx.measureText(text).width;
       ctx.fillText(text, (canvas.width - textWidth) / 2, canvas.height / 2);
     } else {
@@ -452,10 +463,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Handle Key Events
   document.addEventListener("keydown", (event) => {
     if (event.key === " ") {
-      // Space bar
-      event.preventDefault(); // Prevent page from scrolling down
+      event.preventDefault();
       togglePause();
     }
+
     if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
     if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
     if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
