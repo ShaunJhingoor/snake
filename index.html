@@ -61,11 +61,6 @@
         }
       }
 
-      #controls {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
       html,
       body {
         overflow: hidden;
@@ -73,11 +68,26 @@
         touch-action: none;
       }
 
+      #controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #controls div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1dvh;
+      }
+
       #controls button {
         width: 10dvh;
         height: 4dvh;
         font-size: 2dvh;
-        margin: 0.5dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: #444;
         color: white;
         border: 2px solid wheat;
@@ -96,9 +106,8 @@
         animation: movingGlow 3s ease-in-out infinite;
       }
 
-      #controls div {
-        display: flex;
-        gap: 1dvh;
+      #controls button:active {
+        transform: scale(0.9); /* Button press effect */
       }
 
       .modal {
@@ -128,31 +137,126 @@
       }
 
       .modal button {
-        margin: 10px;
-        padding: 10px 15px;
-        font-size: 16px;
-        border: none;
+        margin: 1dvh;
+        padding: 1dvh 1.5dvh;
+        font-size: 1.5dvh;
         cursor: pointer;
+      }
+
+      h1 {
+        font-family: "Press Start 2P", cursive; /* Retro pixel-style font */
+        color: wheat;
+        font-size: 3dvh;
+        text-align: center;
+        margin-bottom: 20px;
+
+        /* Glowing arcade-style text */
+        text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
+          0 0 8px rgba(255, 0, 255, 0.5), 0 0 12px rgba(255, 0, 255, 0.4),
+          0 0 16px rgba(255, 0, 255, 0.3);
+      }
+      h2 {
+        font-family: "Press Start 2P", cursive; /* Retro pixel-style font */
+        color: wheat;
+        font-size: 1.5dvh;
+        text-align: center;
+        margin-bottom: 20px;
+
+        /* Glowing arcade-style text */
+        text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
+          0 0 8px rgba(255, 0, 255, 0.5), 0 0 12px rgba(255, 0, 255, 0.4),
+          0 0 16px rgba(255, 0, 255, 0.3);
+      }
+
+      /* Optional: Make the glow animate like a flickering arcade screen */
+      @keyframes flicker {
+        0% {
+          text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
+            0 0 8px rgba(255, 0, 255, 0.5);
+        }
+        50% {
+          text-shadow: 0 0 6px rgba(255, 0, 255, 0.8),
+            0 0 10px rgba(255, 0, 255, 0.6);
+        }
+        100% {
+          text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
+            0 0 8px rgba(255, 0, 255, 0.5);
+        }
+      }
+
+      h1 {
+        animation: flicker 1.5s infinite alternate; /* Makes the glow pulse slightly */
+      }
+
+      /* General button styles */
+      button {
+        font-family: "Press Start 2P", cursive;
+        font-size: 1.2dvh;
+        text-transform: uppercase;
+        padding: 12px 20px;
+        margin: 5px;
+        border: 3px solid wheat;
+        background-color: black;
+        color: wheat;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        letter-spacing: 2px;
+
+        /* Retro 3D effect */
+        box-shadow: 0 0 5px rgba(255, 0, 255, 0.7),
+          0 0 10px rgba(255, 0, 255, 0.5), 0 0 15px rgba(255, 0, 255, 0.3),
+          inset 0 0 5px rgba(255, 0, 255, 0.6);
+
+        transition: transform 0.1s ease-in-out, box-shadow 0.2s ease-in-out;
+      }
+
+      /* Button hover effect */
+      button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.9),
+          0 0 20px rgba(255, 0, 255, 0.7), 0 0 30px rgba(255, 0, 255, 0.5),
+          inset 0 0 8px rgba(255, 0, 255, 0.7);
+      }
+
+      /* Button press effect */
+      button:active {
+        transform: scale(0.95);
+        box-shadow: 0 0 5px rgba(255, 0, 255, 0.5),
+          0 0 10px rgba(255, 0, 255, 0.4), inset 0 0 10px rgba(255, 0, 255, 0.8);
+      }
+
+      /* Different colors for each button */
+      #exitGame {
+        background-color: red;
+        border-color: wheat;
+        box-shadow: 0 0 5px rgba(255, 50, 50, 0.7),
+          0 0 10px rgba(255, 50, 50, 0.5), inset 0 0 5px rgba(255, 50, 50, 0.6);
+      }
+
+      #exitGame:hover {
+        box-shadow: 0 0 10px rgba(255, 50, 50, 0.9),
+          0 0 20px rgba(255, 50, 50, 0.7), inset 0 0 8px rgba(255, 50, 50, 0.7);
       }
 
       #playAgain {
         background-color: green;
-        color: wheat;
-        color: wheat;
-        border: 2px solid wheat;
+        border-color: wheat;
+        box-shadow: 0 0 5px rgba(50, 255, 50, 0.7),
+          0 0 10px rgba(50, 255, 50, 0.5), inset 0 0 5px rgba(50, 255, 50, 0.6);
       }
 
-      #exitGame {
-        background-color: red;
-        color: wheat;
-        border: 2px solid wheat;
-      }
-      #game_over,
-      #finalScore {
-        color: wheat;
+      #playAgain:hover {
+        box-shadow: 0 0 10px rgba(50, 255, 50, 0.9),
+          0 0 20px rgba(50, 255, 50, 0.7), inset 0 0 8px rgba(50, 255, 50, 0.7);
       }
     </style>
   </head>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+    rel="stylesheet"
+  />
+
   <body>
     <h1 style="color: wheat">Snake Game</h1>
     <canvas id="gameCanvas" width="800" height="800"></canvas>
@@ -168,10 +272,10 @@
     <!-- Game Over Modal -->
     <div id="gameOverModal" class="modal">
       <div class="modal-content">
-        <h2 id="game_over">Game Over!</h2>
-        <p id="finalScore">Final Score: 0</p>
-        <button id="exitGame">End Game</button>
+        <h1 id="game_over">Game Over!</h1>
+        <h2 id="finalScore">Final Score: 0</h2>
         <button id="playAgain">Play Again</button>
+        <button id="exitGame">End Game</button>
       </div>
     </div>
   </body>

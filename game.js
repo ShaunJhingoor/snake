@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Clear the board completely
   function clearBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "black";
-    ctx.font = "5dvh Arial";
+    ctx.fillStyle = "wheat"; // Match the h2 color
+    ctx.font = "5dvh 'Press Start 2P', cursive"; // Use the same font
 
     const text = "Press to Start";
     const textWidth = ctx.measureText(text).width;
@@ -397,9 +397,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     ctx.fillStyle = "agua";
-    ctx.font = "2dvh Arial";
-    ctx.fillText(`Score: ${score}`, 10, 20);
-    ctx.fillText(`Level: ${level}`, 10, 40);
+    ctx.font = "1.5dvh 'Press Start 2P', cursive"; // Use the same font
+    ctx.fillText(`Score: ${score}`, 20, 40);
+    ctx.fillText(`Level: ${level}`, 20, 60);
   }
 
   function togglePause() {
@@ -414,8 +414,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // If game is running, pause it
       clearInterval(gameLoop);
       gameLoop = null;
-      ctx.fillStyle = "white";
-      ctx.font = "5dvh Arial";
+      ctx.fillStyle = "wheat"; // Match the h2 color
+      ctx.font = "2dvh 'Press Start 2P', cursive"; // Use the same font
       const text = "Paused - Press Space to Resume";
       const textWidth = ctx.measureText(text).width;
       ctx.fillText(text, (canvas.width - textWidth) / 2, canvas.height / 2);
