@@ -449,24 +449,31 @@ document.addEventListener("DOMContentLoaded", () => {
     gameLoop = setInterval(draw, speed);
   }
 
-  // End Game Function
   function endGame() {
     clearInterval(gameLoop);
     running = false;
 
     setTimeout(() => {
-      let playAgain = confirm(
-        `Game Over! Final Score: ${score}\nDo you want to play again?`
-      );
-      if (playAgain) {
-        resetGame();
-        startGame();
-      } else {
-        clearBoard();
-        resetGame();
-      }
+      // Update the final score inside the modal
+      document.getElementById("finalScore").innerText = `Final Score: ${score}`;
+
+      // Show the modal
+      document.getElementById("gameOverModal").style.display = "flex";
     }, 200);
   }
+
+  // Add event listeners for modal buttons
+  document.getElementById("playAgain").addEventListener("click", () => {
+    document.getElementById("gameOverModal").style.display = "none"; // Hide modal
+    resetGame();
+    startGame();
+  });
+
+  document.getElementById("exitGame").addEventListener("click", () => {
+    document.getElementById("gameOverModal").style.display = "none"; // Hide modal
+    clearBoard();
+    resetGame();
+  });
 
   canvas.addEventListener("click", () => {
     if (!running) {

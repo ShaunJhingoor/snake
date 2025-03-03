@@ -20,12 +20,47 @@
 
       canvas {
         background-color: gray;
-        border: 2px solid wheat;
-        width: 90dvw; /* Make canvas responsive */
+        border: 4px solid transparent;
+        width: 90dvw;
         height: 80dvh;
-        max-width: 800px; /* Prevents canvas from getting too large */
+        max-width: 800px;
         max-height: 800px;
+        border: 2px solid wheat;
+
+        /* Initial glow */
+        box-shadow: 0 0 6px rgba(255, 0, 255, 0.6),
+          0 0 12px rgba(255, 0, 255, 0.5), 0 0 18px rgba(255, 0, 255, 0.4),
+          inset 0 0 6px rgba(255, 0, 255, 0.5);
+
+        /* Subtle CRT scanline effect */
+        background-image: linear-gradient(
+          rgba(0, 0, 0, 0.07) 50%,
+          transparent 50%
+        );
+        background-size: 100% 4px;
+
+        /* Add an animated glow effect */
+        animation: movingGlow 3s ease-in-out infinite;
       }
+
+      @keyframes movingGlow {
+        0% {
+          box-shadow: 0 0 6px rgba(255, 0, 255, 0.6),
+            0 0 12px rgba(255, 0, 255, 0.5), 0 0 18px rgba(255, 0, 255, 0.4),
+            inset 0 0 6px rgba(255, 0, 255, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 10px rgba(255, 0, 255, 0.8),
+            0 0 16px rgba(255, 0, 255, 0.6), 0 0 24px rgba(255, 0, 255, 0.5),
+            inset 0 0 8px rgba(255, 0, 255, 0.6);
+        }
+        100% {
+          box-shadow: 0 0 6px rgba(255, 0, 255, 0.6),
+            0 0 12px rgba(255, 0, 255, 0.5), 0 0 18px rgba(255, 0, 255, 0.4),
+            inset 0 0 6px rgba(255, 0, 255, 0.5);
+        }
+      }
+
       #controls {
         display: flex;
         flex-direction: column;
@@ -48,16 +83,78 @@
         border: 2px solid wheat;
         border-radius: 1dvh;
         cursor: pointer;
+        box-shadow: 0 0 6px rgba(255, 0, 255, 0.6),
+          0 0 12px rgba(255, 0, 255, 0.5), 0 0 18px rgba(255, 0, 255, 0.4),
+          inset 0 0 6px rgba(255, 0, 255, 0.5);
+
+        /* Subtle CRT scanline effect */
+        background-image: linear-gradient(
+          rgba(0, 0, 0, 0.07) 50%,
+          transparent 50%
+        );
+        background-size: 100% 4px;
+        animation: movingGlow 3s ease-in-out infinite;
       }
 
       #controls div {
         display: flex;
         gap: 1dvh;
       }
+
+      .modal {
+        display: flex;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: black;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        width: 300px;
+        color: wheat;
+        border: 2px solid wheat;
+        box-shadow: 0 0 4px rgba(255, 0, 255, 0.4),
+          0 0 8px rgba(255, 0, 255, 0.3), 0 0 16px rgba(255, 0, 255, 0.2),
+          inset 0 0 4px rgba(255, 0, 255, 0.3);
+      }
+
+      .modal button {
+        margin: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+
+      #playAgain {
+        background-color: green;
+        color: wheat;
+        color: wheat;
+        border: 2px solid wheat;
+      }
+
+      #exitGame {
+        background-color: red;
+        color: wheat;
+        border: 2px solid wheat;
+      }
+      #game_over,
+      #finalScore {
+        color: wheat;
+      }
     </style>
   </head>
   <body>
-    <h1 style="color: aqua">Snake Game</h1>
+    <h1 style="color: wheat">Snake Game</h1>
     <canvas id="gameCanvas" width="800" height="800"></canvas>
     <script src="game.js"></script>
     <div id="controls">
@@ -66,6 +163,15 @@
         <button id="left">◀</button>
         <button id="down">▼</button>
         <button id="right">▶</button>
+      </div>
+    </div>
+    <!-- Game Over Modal -->
+    <div id="gameOverModal" class="modal">
+      <div class="modal-content">
+        <h2 id="game_over">Game Over!</h2>
+        <p id="finalScore">Final Score: 0</p>
+        <button id="exitGame">End Game</button>
+        <button id="playAgain">Play Again</button>
       </div>
     </div>
   </body>
