@@ -497,7 +497,14 @@
         canvas{
           max-height: 800px;
         }
+      
       }
+      @media (max-width: 768px) {
+        .controlOption[data-position="none"] {
+          display: none;
+        }
+      }
+
     </style>
   </head>
   <link
@@ -546,6 +553,7 @@
           <button class="controlOption" data-position="left">Left</button>
           <button class="controlOption" data-position="right">Right</button>
         </div>
+        <button class="controlOption" data-position="none">None</button>
         <button id="instructionsSettings">Instructions</button>
         <button id="closeSettings">Close</button>
       </div>

@@ -308,10 +308,10 @@ document.addEventListener("DOMContentLoaded", () => {
           eyeY = part.y + box * 0.3; // Move eye higher
         } else if (direction === "UP") {
           eyeX = part.x + box * 0.3;
-          eyeY = part.y + box * 0.15; // Already high
+          eyeY = part.y + box * 0.15;
         } else {
           eyeX = part.x + box * 0.6;
-          eyeY = part.y + box * 0.75; // Keep it lower
+          eyeY = part.y + box * 0.75;
         }
 
         // Draw the eye (ellipse for realism)
@@ -579,6 +579,9 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (position === "right") {
         controlsContainer.style.justifyContent = "flex-end";
         controlsContainer.style.alignItems = "flex-end";
+      } else if (position === "none") {
+        controlsContainer.style.display = "none";
+        canvas.style.marginBottom = "5dvh";
       } else {
         controlsContainer.style.justifyContent = "center";
         controlsContainer.style.alignItems = "center";
