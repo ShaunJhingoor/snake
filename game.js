@@ -296,34 +296,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // **2️⃣ Draw Snake Head with Eyes & Tapered Shape**
       if (isHead) {
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "black"; // Eye color
 
-        // Adjust eye positioning based on direction
-        let leftEyeX, leftEyeY, rightEyeX, rightEyeY;
+        let eyeX, eyeY;
 
         if (direction === "RIGHT") {
-          leftEyeX = part.x + box * 0.65;
-          rightEyeX = part.x + box * 0.8;
-          leftEyeY = rightEyeY = part.y + box * 0.3;
+          eyeX = part.x + box * 0.8;
+          eyeY = part.y + box * 0.3; // Move eye higher
         } else if (direction === "LEFT") {
-          leftEyeX = part.x + box * 0.2;
-          rightEyeX = part.x + box * 0.35;
-          leftEyeY = rightEyeY = part.y + box * 0.3;
+          eyeX = part.x + box * 0.2;
+          eyeY = part.y + box * 0.3; // Move eye higher
         } else if (direction === "UP") {
-          leftEyeX = rightEyeX = part.x + box * 0.3;
-          leftEyeY = part.y + box * 0.2;
-          rightEyeY = part.y + box * 0.35;
+          eyeX = part.x + box * 0.3;
+          eyeY = part.y + box * 0.15; // Already high
         } else {
-          leftEyeX = rightEyeX = part.x + box * 0.3;
-          leftEyeY = part.y + box * 0.65;
-          rightEyeY = part.y + box * 0.8;
+          eyeX = part.x + box * 0.6;
+          eyeY = part.y + box * 0.75; // Keep it lower
         }
 
-        // Draw Eyes
+        // Draw the eye (ellipse for realism)
         ctx.beginPath();
-        ctx.arc(leftEyeX, leftEyeY, box / 10, 0, Math.PI * 2); // Left eye
-        ctx.arc(rightEyeX, rightEyeY, box / 10, 0, Math.PI * 2); // Right eye
+        ctx.ellipse(eyeX, eyeY, box * 0.12, box * 0.2, 0, 0, Math.PI * 2);
         ctx.fill();
+
+        // Draw the slit pupil
+        ctx.strokeStyle = "yellow"; // Pupil color (adjust for realism)
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(eyeX, eyeY - box * 0.1);
+        ctx.lineTo(eyeX, eyeY + box * 0.1);
+        ctx.stroke();
 
         // **3️⃣ Draw Snake Tongue in the Correct Direction**
         ctx.strokeStyle = "red";
