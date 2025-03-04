@@ -26,7 +26,8 @@
         height: 80dvh;
         max-width: 800px;
         max-height: 800px;
-        border: 2px solid wheat; 
+        border: 2px solid wheat;
+       
         box-shadow: 0 0 6px rgba(255, 0, 255, 0.6),
           0 0 12px rgba(255, 0, 255, 0.5), 0 0 18px rgba(255, 0, 255, 0.4),
           inset 0 0 6px rgba(255, 0, 255, 0.5);
@@ -73,7 +74,7 @@
         width: 90dvw;
         max-width: 800px;
         display: flex;
-        /* flex-wrap: wrap; */
+        flex-wrap: wrap;
         justify-content: space-between; /* Title on left, buttons on right */
         align-items: center;
         padding: 1dvh;
@@ -405,8 +406,7 @@
       h1 {
         font-family: "Press Start 2P", cursive; /* Retro pixel-style font */
         color: wheat;
-        font-size: 3dvh;
-        /* font-size: clamp(2dvh, 4vw, 4dvh); */
+        font-size: clamp(2dvh, 4vw, 4dvh);
         text-align: center;
         margin-bottom: 20px;
 
@@ -496,8 +496,7 @@
           line-height: 3dvh;
         }
         canvas{
-          max-height: 60dvh;
-          max-width: 80dvw;
+          max-height: 70dvh;
         }
       }
     </style>
