@@ -147,14 +147,16 @@
         padding: 20px;
         text-align: center;
         border-radius: 10px;
-        width: 300px;
+        width: 90dvw;
         color: wheat;
+
         border: 2px solid wheat;
         box-shadow: 0 0 4px rgba(255, 0, 255, 0.4),
           0 0 8px rgba(255, 0, 255, 0.3), 0 0 16px rgba(255, 0, 255, 0.2),
           inset 0 0 4px rgba(255, 0, 255, 0.3);
       }
       
+     
 
       /* Control Position Buttons */
       #controlOptions {
@@ -354,6 +356,51 @@
         font-size: 1.5dvh;
         cursor: pointer;
       }
+   
+
+      #exitGame {
+        background-color: red;
+        border-color: wheat;
+        box-shadow: 0 0 5px rgba(255, 50, 50, 0.7),
+          0 0 10px rgba(255, 50, 50, 0.5), inset 0 0 5px rgba(255, 50, 50, 0.6);
+      }
+
+      #exitGame:hover {
+        box-shadow: 0 0 10px rgba(255, 50, 50, 0.9),
+          0 0 20px rgba(255, 50, 50, 0.7), inset 0 0 8px rgba(255, 50, 50, 0.7);
+      }
+
+      #playAgain {
+        background-color: green;
+        border-color: wheat;
+        box-shadow: 0 0 5px rgba(50, 255, 50, 0.7),
+          0 0 10px rgba(50, 255, 50, 0.5), inset 0 0 5px rgba(50, 255, 50, 0.6);
+      }
+
+      #playAgain:hover {
+        box-shadow: 0 0 10px rgba(50, 255, 50, 0.9),
+          0 0 20px rgba(50, 255, 50, 0.7), inset 0 0 8px rgba(50, 255, 50, 0.7);
+      }
+   
+      @keyframes flicker {
+        0% {
+          text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
+            0 0 8px rgba(255, 0, 255, 0.5);
+        }
+        50% {
+          text-shadow: 0 0 6px rgba(255, 0, 255, 0.8),
+            0 0 10px rgba(255, 0, 255, 0.6);
+        }
+        100% {
+          text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
+            0 0 8px rgba(255, 0, 255, 0.5);
+        }
+      }
+
+      h1 {
+        animation: flicker 1.5s infinite alternate; /* Makes the glow pulse slightly */
+      }
+
 
       h1 {
         font-family: "Press Start 2P", cursive; /* Retro pixel-style font */
@@ -383,7 +430,7 @@
       h3 {
         font-family: "Press Start 2P", cursive; /* Retro pixel-style font */
         color: wheat;
-        font-size: 2dvh;
+        font-size: 2.5dvh;
         text-align: center;
         margin-bottom: 20px;
 
@@ -399,31 +446,24 @@
         font-size: 1.5dvh;
         text-align:unset;
         margin-bottom: 1dvh;
-        line-height: 2dvh;
+        line-height: 2.5dvh;
         text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
           0 0 8px rgba(255, 0, 255, 0.5), 0 0 12px rgba(255, 0, 255, 0.4),
           0 0 16px rgba(255, 0, 255, 0.3);
       }
-      /* Optional: Make the glow animate like a flickering arcade screen */
-      @keyframes flicker {
-        0% {
-          text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
-            0 0 8px rgba(255, 0, 255, 0.5);
-        }
-        50% {
-          text-shadow: 0 0 6px rgba(255, 0, 255, 0.8),
-            0 0 10px rgba(255, 0, 255, 0.6);
-        }
-        100% {
-          text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
-            0 0 8px rgba(255, 0, 255, 0.5);
-        }
+      button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.9),
+          0 0 20px rgba(255, 0, 255, 0.7), 0 0 30px rgba(255, 0, 255, 0.5),
+          inset 0 0 8px rgba(255, 0, 255, 0.7);
       }
 
-      h1 {
-        animation: flicker 1.5s infinite alternate; /* Makes the glow pulse slightly */
+      /* Button press effect */
+      button:active {
+        transform: scale(0.95);
+        box-shadow: 0 0 5px rgba(255, 0, 255, 0.5),
+          0 0 10px rgba(255, 0, 255, 0.4), inset 0 0 10px rgba(255, 0, 255, 0.8);
       }
-
       /* General button styles */
       button {
         font-family: "Press Start 2P", cursive;
@@ -447,44 +487,13 @@
         transition: transform 0.1s ease-in-out, box-shadow 0.2s ease-in-out;
       }
 
-      /* Button hover effect */
-      button:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 10px rgba(255, 0, 255, 0.9),
-          0 0 20px rgba(255, 0, 255, 0.7), 0 0 30px rgba(255, 0, 255, 0.5),
-          inset 0 0 8px rgba(255, 0, 255, 0.7);
-      }
-
-      /* Button press effect */
-      button:active {
-        transform: scale(0.95);
-        box-shadow: 0 0 5px rgba(255, 0, 255, 0.5),
-          0 0 10px rgba(255, 0, 255, 0.4), inset 0 0 10px rgba(255, 0, 255, 0.8);
-      }
-
-      /* Different colors for each button */
-      #exitGame {
-        background-color: red;
-        border-color: wheat;
-        box-shadow: 0 0 5px rgba(255, 50, 50, 0.7),
-          0 0 10px rgba(255, 50, 50, 0.5), inset 0 0 5px rgba(255, 50, 50, 0.6);
-      }
-
-      #exitGame:hover {
-        box-shadow: 0 0 10px rgba(255, 50, 50, 0.9),
-          0 0 20px rgba(255, 50, 50, 0.7), inset 0 0 8px rgba(255, 50, 50, 0.7);
-      }
-
-      #playAgain {
-        background-color: green;
-        border-color: wheat;
-        box-shadow: 0 0 5px rgba(50, 255, 50, 0.7),
-          0 0 10px rgba(50, 255, 50, 0.5), inset 0 0 5px rgba(50, 255, 50, 0.6);
-      }
-
-      #playAgain:hover {
-        box-shadow: 0 0 10px rgba(50, 255, 50, 0.9),
-          0 0 20px rgba(50, 255, 50, 0.7), inset 0 0 8px rgba(50, 255, 50, 0.7);
+      @media (min-width: 1024px) {
+        #instructionsModal .modal-content {
+          width: 30dvw; /* Adjusts width on large screens */
+        }
+        p {
+          line-height: 3dvh;
+        }
       }
     </style>
   </head>
