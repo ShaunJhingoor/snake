@@ -76,8 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
     badFood = getRandomPositions(1);
 
     if (gameLoop) clearInterval(gameLoop);
+    document.getElementById("gameOverModal").style.display = "none";
 
-    // Clear the canvas
     clearBoard();
   }
 
@@ -518,10 +518,17 @@ document.addEventListener("DOMContentLoaded", () => {
       startGame();
     }
   });
+  const instructionsModal = document.getElementById("instructionsModal");
+
+  instructionsModal.style.display = "flex";
+
+  const instructionsButton = document.getElementById("instructionsSettings");
+  const closeInstructions = document.getElementById("closeInstructions");
 
   const settingsButton = document.getElementById("settingsButton");
   const settingsModal = document.getElementById("settingsModal");
   const closeSettings = document.getElementById("closeSettings");
+
   const controlButtons = document.querySelectorAll(".controlOption");
   const controls = document.getElementById("controls");
 
@@ -542,6 +549,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // Close Settings Modal
   closeSettings.addEventListener("click", () => {
     settingsModal.style.display = "none";
+  });
+
+  instructionsButton.addEventListener("click", () => {
+    if (!isPaused && running) {
+      togglePause();
+    }
+
+    instructionsModal.style.display = "flex"; // ✅ Show the correct modal
+  });
+
+  closeInstructions.addEventListener("click", () => {
+    instructionsModal.style.display = "none"; // ✅ Close the instructions modal
   });
 
   // Change Control Position

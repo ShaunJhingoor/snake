@@ -115,7 +115,7 @@
       }
 
       /* Settings Modal (Same style as Game Over Modal) */
-      #settingsModal {
+      #settingsModal, #instructionsModal {
         display: none;
         position: fixed;
         z-index: 10;
@@ -141,6 +141,20 @@
           0 0 8px rgba(255, 0, 255, 0.3), 0 0 16px rgba(255, 0, 255, 0.2),
           inset 0 0 4px rgba(255, 0, 255, 0.3);
       }
+
+      #instructionsModal .modal-content {
+        background-color: black;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        width: 300px;
+        color: wheat;
+        border: 2px solid wheat;
+        box-shadow: 0 0 4px rgba(255, 0, 255, 0.4),
+          0 0 8px rgba(255, 0, 255, 0.3), 0 0 16px rgba(255, 0, 255, 0.2),
+          inset 0 0 4px rgba(255, 0, 255, 0.3);
+      }
+      
 
       /* Control Position Buttons */
       #controlOptions {
@@ -180,6 +194,28 @@
         border: 2px solid wheat;
       }
 
+      #closeInstructions{
+        margin-top: 10px;
+        padding: 10px 15px;
+        font-size: 1.5dvh;
+        border: none;
+        cursor: pointer;
+        background-color: red;
+        color: wheat;
+        border: 2px solid wheat;
+      }
+
+      #instructionsSettings {
+        margin-top: 10px;
+        padding: 10px 15px;
+        font-size: 1.5dvh;
+        border: none;
+        cursor: pointer;
+        background-color: black;
+        color: wheat;
+        border: 2px solid wheat;
+      }
+
       #muteButton:hover,
       #settingsButton:hover {
         transform: scale(1.1);
@@ -201,6 +237,47 @@
         width: 100%;
 
         bottom: 1dvh;
+      }
+
+
+      #controlsdisplay {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1dvh;
+      }
+
+      #controlsdisplay button {
+        width: 8dvh;
+        height: 4dvh;
+        font-size: 1dvh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #444;
+        color: white;
+        border: 2px solid wheat;
+        border-radius: 1dvh;
+        cursor: pointer;
+        box-shadow: 0 0 6px rgba(255, 0, 255, 0.6),
+          0 0 12px rgba(255, 0, 255, 0.5), 0 0 18px rgba(255, 0, 255, 0.4),
+          inset 0 0 6px rgba(255, 0, 255, 0.5);
+
+        /* Subtle CRT scanline effect */
+        background-image: linear-gradient(
+          rgba(0, 0, 0, 0.07) 50%,
+          transparent 50%
+        );
+        background-size: 100% 4px;
+        animation: movingGlow 3s ease-in-out infinite;
+      }
+
+      #controlsdisplay div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5dvh;
       }
 
       #controls {
@@ -303,6 +380,30 @@
           0 0 16px rgba(255, 0, 255, 0.3);
       }
 
+      h3 {
+        font-family: "Press Start 2P", cursive; /* Retro pixel-style font */
+        color: wheat;
+        font-size: 2dvh;
+        text-align: center;
+        margin-bottom: 20px;
+
+        /* Glowing arcade-style text */
+        text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
+          0 0 8px rgba(255, 0, 255, 0.5), 0 0 12px rgba(255, 0, 255, 0.4),
+          0 0 16px rgba(255, 0, 255, 0.3);
+      }
+
+      p {
+        font-family: "Press Start 2P", cursive; /* Retro pixel-style font */
+        color: wheat;
+        font-size: 1.5dvh;
+        text-align:unset;
+        margin-bottom: 1dvh;
+        line-height: 2dvh;
+        text-shadow: 0 0 4px rgba(255, 0, 255, 0.6),
+          0 0 8px rgba(255, 0, 255, 0.5), 0 0 12px rgba(255, 0, 255, 0.4),
+          0 0 16px rgba(255, 0, 255, 0.3);
+      }
       /* Optional: Make the glow animate like a flickering arcade screen */
       @keyframes flicker {
         0% {
@@ -433,8 +534,29 @@
           <button class="controlOption" data-position="left">Left</button>
           <button class="controlOption" data-position="right">Right</button>
         </div>
+        <button id="instructionsSettings">Instructions</button>
         <button id="closeSettings">Close</button>
       </div>
     </div>
+      <!-- Instructions Modal -->
+    <div id="instructionsModal" class="modal">
+      <div class="modal-content">
+        <h3>Welcome to the snake game!</h3>
+        <p>To start or pause the game you can simply click the space bar or click on the canvas.</p>
+        <p>To grow your snake eat the fruit. Avoid the posion so you do not die or shrink.</p>
+        <p>If you click on the settings ⚙ you can change the placement of your keyboard or view these instructions again.</p>
+        <p>If you click mute both SFX and background music will be muted</p>
+        <p>If you click on the settings ⚙ you can change the placement of your keyboard or view these instructions again.</p>
+        <div id="controlsdisplay">
+          <button id="updisplay">▲</button>
+          <div>
+            <button id="leftdisplay">◀</button>
+            <button id="downdisplay">▼</button>
+            <button id="rightdisplay">▶</button>
+          </div>
+        </div>
+        <p>Most importantly remember to have fun!</p>
+        <button id="closeInstructions">Close</button>
+      </div>
   </body>
 </html>
