@@ -506,28 +506,29 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(
           "finalScore"
         ).innerText = `Final Score: ${score}`;
+        let existingHighScore = document.querySelector(
+          ".modal-content h4.highScore"
+        );
+        if (existingHighScore) {
+          existingHighScore.remove();
+        }
 
         if (isNewHighScore) {
           const highScoreText = document.createElement("h4");
           highScoreText.innerText = `High Score: ${highScore}`;
-          highScoreText.style.color = "red";
-          highScoreText.style.fontSize = "2.5dvh";
+          highScoreText.style.color = "#FFD700"; // Hex for Gold
+
           highScoreText.style.marginTop = "1dvh";
+          ctx.font = "1.5dvh 'Press Start 2P', cursive";
 
           if (isNewHighScore && highScore > 0) {
             highScoreText.style.textShadow =
-              "0 0 10px gold, 0 0 20px orange, 0 0 30px yellow";
+              "0 0 10px #FFD700, 0 0 20px orange, 0 0 30px yellow";
             highScoreText.style.animation = "sparkle 1s infinite alternate";
           }
 
-          let modal = document.querySelector(".modal-content");
-          let existingHighScore = document.querySelector(
-            ".modal-content h4.highScore"
-          );
-          if (existingHighScore) existingHighScore.remove();
-
-          highScoreText.classList.add("highScore");
-          modal.appendChild(highScoreText);
+          let finalScoreElement = document.getElementById("finalScore");
+          finalScoreElement.insertAdjacentElement("afterend", highScoreText);
         }
 
         document.getElementById("gameOverModal").style.display = "flex";
