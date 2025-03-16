@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bgMusic.volume = 0.5;
   const muteButton = document.getElementById("muteButton");
   let isMuted = false;
+  let highScore = localStorage.getItem("highScore") || 0;
 
   muteButton.addEventListener("click", () => {
     isMuted = !isMuted;
@@ -437,6 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.font = "1.5dvh 'Press Start 2P', cursive"; // Use the same font
     ctx.fillText(`Score: ${score}`, 20, 40);
     ctx.fillText(`Level: ${level}`, 20, 60);
+    if (highScore > 0) ctx.fillText(`High Score: ${highScore}`, 20, 80);
   }
 
   function togglePause() {
@@ -489,6 +491,13 @@ document.addEventListener("DOMContentLoaded", () => {
     clearInterval(gameLoop);
     running = false;
 
+    let isNewHighScore = false;
+    if (score > 0 && score > highScore) {
+      highScore = score;
+      localStorage.setItem("highScore", highScore);
+      isNewHighScore = true;
+    }
+
     setTimeout(() => {
       if (score < 0) {
         document.getElementById("finalScore").innerText = `Final Score: 0`;
@@ -497,6 +506,30 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(
           "finalScore"
         ).innerText = `Final Score: ${score}`;
+
+        if (isNewHighScore) {
+          const highScoreText = document.createElement("h4");
+          highScoreText.innerText = `High Score: ${highScore}`;
+          highScoreText.style.color = "red";
+          highScoreText.style.fontSize = "2.5dvh";
+          highScoreText.style.marginTop = "1dvh";
+
+          if (isNewHighScore && highScore > 0) {
+            highScoreText.style.textShadow =
+              "0 0 10px gold, 0 0 20px orange, 0 0 30px yellow";
+            highScoreText.style.animation = "sparkle 1s infinite alternate";
+          }
+
+          let modal = document.querySelector(".modal-content");
+          let existingHighScore = document.querySelector(
+            ".modal-content h4.highScore"
+          );
+          if (existingHighScore) existingHighScore.remove();
+
+          highScoreText.classList.add("highScore");
+          modal.appendChild(highScoreText);
+        }
+
         document.getElementById("gameOverModal").style.display = "flex";
       }
     }, 200);
