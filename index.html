@@ -487,6 +487,41 @@
         transition: transform 0.1s ease-in-out, box-shadow 0.2s ease-in-out;
       }
 
+      @keyframes sparkle {
+        0% {
+          text-shadow: 
+            0 0 8px #FFC107,  
+            0 0 16px #FF8C00, 
+            0 0 24px #FFD700, 
+            0 0 32px #FFFACD; 
+        }
+        50% {
+          text-shadow: 
+            0 0 12px #FFD700, 
+            0 0 24px #FFA500, 
+            0 0 36px #FFFACD, 
+            0 0 48px #FFFFE0; 
+        }
+        100% {
+          text-shadow: 
+            0 0 8px #FFC107,  
+            0 0 16px #FF8C00, 
+            0 0 24px #FFD700, 
+            0 0 32px #FFFACD;
+        }
+      }
+
+      .highScore {
+        font-family: "Press Start 2P", cursive;
+        color: #FFC107; 
+        font-size: 2dvh;
+        margin-top: 3dvh;
+        text-transform: uppercase;
+        animation: sparkle 2s infinite alternate;
+      }
+
+
+
       @media (min-width: 1024px) {
         #instructionsModal .modal-content {
           width: 30dvw; /* Adjusts width on large screens */

@@ -515,17 +515,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (isNewHighScore) {
           const highScoreText = document.createElement("h4");
-          highScoreText.innerText = `High Score: ${highScore}`;
-          highScoreText.style.color = "#FFD700"; // Hex for Gold
+          highScoreText.innerText = `HIGH SCORE: ${highScore}`;
+          highScoreText.classList.add("highScore"); // Apply styling
 
-          highScoreText.style.marginTop = "1dvh";
-          ctx.font = "1.5dvh 'Press Start 2P', cursive";
-
-          if (isNewHighScore && highScore > 0) {
-            highScoreText.style.textShadow =
-              "0 0 10px #FFD700, 0 0 20px orange, 0 0 30px yellow";
-            highScoreText.style.animation = "sparkle 1s infinite alternate";
-          }
+          // Add sparkle effect only if a new high score is achieved
+          highScoreText.style.animation = "sparkle 1s infinite alternate";
 
           let finalScoreElement = document.getElementById("finalScore");
           finalScoreElement.insertAdjacentElement("afterend", highScoreText);
