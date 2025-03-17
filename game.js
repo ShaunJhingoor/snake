@@ -523,7 +523,6 @@ document.addEventListener("DOMContentLoaded", () => {
           highScoreText.classList.add("highScore"); // Apply styling
 
           // Add sparkle effect only if a new high score is achieved
-          highScoreText.style.animation = "sparkle 1s infinite alternate";
 
           let finalScoreElement = document.getElementById("finalScore");
           finalScoreElement.insertAdjacentElement("afterend", highScoreText);
