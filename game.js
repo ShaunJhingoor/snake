@@ -49,7 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
   bgMusic.volume = 0.5;
   const muteButton = document.getElementById("muteButton");
   let isMuted = false;
-  let highScore = localStorage.getItem("highScore") || 0;
+
+  const decodeHighScore = (encoded) => atob(encoded);
+  let storedHighScore = localStorage.getItem("highScore1");
+  let highScore = storedHighScore ? decodeHighScore(storedHighScore) : 0;
 
   muteButton.addEventListener("click", () => {
     isMuted = !isMuted;
@@ -494,7 +497,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let isNewHighScore = false;
     if (score > 0 && score > highScore) {
       highScore = score;
-      localStorage.setItem("highScore", highScore);
+      const encodeHighScore = (score) => btoa(score); // Convert to Base64
+      localStorage.setItem("highScore1", encodeHighScore(highScore));
       isNewHighScore = true;
     }
 
